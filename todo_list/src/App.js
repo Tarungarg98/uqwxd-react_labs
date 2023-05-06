@@ -53,6 +53,18 @@ const App = () => {
     setTodoEditing(null);
   }
 
+  // Add the clearText code here
+  function clearText(id) {
+    const updatedTodos = [...todos].map((todo) => {
+      if (todo.id === id) {
+        todo.text = "";
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+    setTodoEditing(null);
+  }
+
   return (
     <div id="todo-list">
       <h1>Todo List</h1>
@@ -84,9 +96,21 @@ const App = () => {
           </div>
           <div className="todo-actions">
             {todo.id === todoEditing ? (
-              <button onClick={() => submitEdits(todo.id)}>Submit Edits</button>
+              <div>
+                <button onClick={() => submitEdits(todo.id)}>
+                  Submit Edits
+                </button>
+                <button onClick={() => setTodoEditing(null)}>Cancel</button>
+              </div>
             ) : (
-              <button onClick={() => setTodoEditing(todo.id)}>Edit</button>
+              <button
+                onClick={() => {
+                  setTodoEditing(todo.id);
+                  setEditingText(todo.text);
+                }}
+              >
+                Edit
+              </button>
             )}
 
             <button onClick={() => deleteTodo(todo.id)}>Delete</button>
